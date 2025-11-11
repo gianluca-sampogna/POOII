@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, Text, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles as styles } from "./style";
 
 type Viagem = {
@@ -12,13 +13,16 @@ type Viagem = {
   vagas_maximas: number;
   placa_veiculo: string;
   modelo: string;
+  km: number;
+  valor_total: number;
 };
 
 export default function MinhasViagens() {
   const [viagens, setViagens] = useState<Viagem[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  const BASE_URL = "http://172.20.10.4:3000";
+  const BASE_URL = "http://localhost:3000";
 
   useEffect(() => {
     async function carregarViagens() {
@@ -66,6 +70,12 @@ export default function MinhasViagens() {
     );
   }
 
+  // função pra formatar a data/hora do ISO pro formato mais legível
+  const formatarDataHora = (iso: string) => {
+    const data = new Date(iso);
+    return `${data.toLocaleDateString()} ${data.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title3}>Minhas Viagens</Text>
@@ -73,26 +83,44 @@ export default function MinhasViagens() {
       <FlatList
         data={viagens}
         keyExtractor={(item) => item.id_viagem.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <View
             style={{
-              backgroundColor: "#F8FAFF",
               padding: 15,
               borderRadius: 15,
               marginVertical: 8,
               borderWidth: 1,
               borderColor: "#E6EEF8",
+              gap: 5,
+              flexDirection: "row",
             }}
           >
-            <Text style={{ fontWeight: "bold" }}>{item.modelo} ({item.placa_veiculo})</Text>
-            <Text>Origem: {item.local_saida}</Text>
-            <Text>Destino: {item.local_chegada}</Text>
-            <Text>Partida: {item.horario_partida}</Text>
-            <Text>Vagas: {item.vagas_maximas}</Text>
-            <Text>Valor/km: R$ {item.valor_por_km.toFixed(2)}</Text>
+            <View>
+              <Image source={require('../assets/images/icon-van.png')} style={styles.icon} resizeMode="contain" />
+            </View>
+            <View>
+              <Text style={{ fontWeight: "bold" }}>{item.local_saida} → {item.local_chegada}</Text>
+              <Text>{formatarDataHora(item.horario_partida)}</Text>
+              <Text>{item.vagas_maximas} vagas</Text>
+              <Text>{item.km} km - R$ {item.valor_total ? item.valor_total.toFixed(2) : "0.00"}</Text>
+            </View>
+
           </View>
         )}
       />
+      <TouchableOpacity
+        onPress={() => router.push("/criarViagem")}
+        style={{
+          backgroundColor: "#007bff",
+          padding: 12,
+          borderRadius: 10,
+          marginVertical: 15,
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#fff", fontWeight: "bold" }}>Nova Viagem</Text>
+      </TouchableOpacity>
     </View>
   );
 }

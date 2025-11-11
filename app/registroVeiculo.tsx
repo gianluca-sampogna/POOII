@@ -63,6 +63,7 @@ export default function RegistroVeiculo() {
           placeholder="Selecione a cor"
           style={styles.input2}
           dropDownContainerStyle={{ borderColor: "#ccc" }}
+          placeholderStyle={{ color: "#c9c9c9"}}
         />
         <TextInput value={passageiros_maximos} keyboardType="numeric" onChangeText={setPassageiros_maximos} placeholder="Capacidade" placeholderTextColor="#c9c9c9ff" style={styles.input2}></TextInput>
         <TextInput value={chassi} onChangeText={setChassi} placeholder="Chassi" placeholderTextColor="#c9c9c9ff" style={styles.input2}></TextInput>

@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Platform, TouchableOpacity } from 'react-native';
 
-const BASE_URL = 'http://192.168.100.192:3000';
+const BASE_URL = 'http://localhost:3000';
 // const BASE_URL = 'http://172.20.10.4:3000';
 
 export default function BotaoVoltar() {

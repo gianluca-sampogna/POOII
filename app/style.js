@@ -8,6 +8,7 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#FFFFFF',
+    gap: 10,
   },
   form: {
     paddingVertical: 40,
@@ -99,4 +100,8 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: '#fc2600ff',
     padding: 5,
   },
+  icon : {
+    width: 70,
+    height: 70,
+  }
 });
