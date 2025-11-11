@@ -171,7 +171,7 @@ export async function login({ email, senha, router }) {
   }
 }
 
-export async function cadastrarVeiculo({ tipo, placa, modelo, cor, passageiros_maximos, chassi }) {
+export async function cadastrarVeiculo({ tipo, placa, modelo, cor, passageiros_maximos, chassi, router }) {
   try {
     const placaRegex = /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i; if (!placaRegex.test(placa)) { alert('Placa inválida. Use o formato ABC1D23.'); return; }
     const capacidadeNum = Number(passageiros_maximos);
