@@ -99,4 +99,8 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#fc2600ff",
     padding: 5,
   },
+  icon : {
+    width: 70,
+    height: 70,
+  }
 });
